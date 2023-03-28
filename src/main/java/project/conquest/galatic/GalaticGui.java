@@ -1,9 +1,9 @@
 package project.conquest.galatic;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 public class GalaticGui extends JFrame {
     private JButton moff;
@@ -18,34 +18,49 @@ public class GalaticGui extends JFrame {
     private JButton systemButton;
     private JPanel Main;
     private JPanel MoffPanel;
-public GalaticGui() {
+public GalaticGui(){
+
     moff.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             Moff moffFrame = new Moff();
             moffFrame.setContentPane(moffFrame.moffPanel);
 
-            String[] names = {"Name 1", "Name 2", "Name 3", "Name 4", "Name 5"};
-            JList<String> nameList = new JList<>(names);
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/galacticconquest", "Testuser", "Test123!");
 
-            JScrollPane scrollPane = moffFrame.getNamelist();
+                // Execute the SQL query
+                PreparedStatement stmt = conn.prepareStatement("SELECT fname, lname FROM moff");
+                ResultSet rs = stmt.executeQuery();
 
-            if (scrollPane != null){
+                // Retrieve the results
                 DefaultListModel<String> model = new DefaultListModel<>();
-                model.addElement("Item 1");
-                model.addElement("Item 2");
+                while (rs.next()) {
+                    String firstname = rs.getString("fname");
+                    String lastname = rs.getString("lname");
+                    model.addElement(firstname + " " + lastname);
+                }
+
+                // Display the results
                 JList<String> list = new JList<>(model);
+                JScrollPane scrollPane = moffFrame.getNamelist();
                 scrollPane.setViewportView(list);
+
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
 
-
-            moffFrame.setSize(500, 700);
+            moffFrame.setSize(700, 700);
             moffFrame.setVisible(true);
             moffFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
     });
 }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
+
         GalaticGui gui = new GalaticGui();
         gui.setContentPane(gui.Main);
         gui.setTitle("Galatic Conquest Database");
