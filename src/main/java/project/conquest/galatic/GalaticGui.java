@@ -1,4 +1,7 @@
+package project.conquest.galatic;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,13 +22,23 @@ public GalaticGui() {
     moff.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFrame moffFrame = new JFrame("Moff Window");
+            Moff moffFrame = new Moff();
+            moffFrame.setContentPane(moffFrame.moffPanel);
 
             String[] names = {"Name 1", "Name 2", "Name 3", "Name 4", "Name 5"};
             JList<String> nameList = new JList<>(names);
-            JScrollPane scrollPane = new JScrollPane(nameList);
 
-            moffFrame.getContentPane().add(scrollPane);
+            JScrollPane scrollPane = moffFrame.getNamelist();
+
+            if (scrollPane != null){
+                DefaultListModel<String> model = new DefaultListModel<>();
+                model.addElement("Item 1");
+                model.addElement("Item 2");
+                JList<String> list = new JList<>(model);
+                scrollPane.setViewportView(list);
+            }
+
+
             moffFrame.setSize(500, 700);
             moffFrame.setVisible(true);
             moffFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
