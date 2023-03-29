@@ -1,6 +1,8 @@
 package project.conquest.galatic;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -19,7 +21,6 @@ public class GalaticGui extends JFrame {
     private JPanel Main;
     private JPanel MoffPanel;
 public GalaticGui(){
-
     moff.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -27,8 +28,7 @@ public GalaticGui(){
             moffFrame.setContentPane(moffFrame.moffPanel);
 
             try {
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/galacticconquest", "Testuser", "Test123!");
-
+                Connection conn = ConnectSQL();
                 // Execute the SQL query
                 PreparedStatement stmt = conn.prepareStatement("SELECT fname, lname FROM moff");
                 ResultSet rs = stmt.executeQuery();
@@ -43,6 +43,48 @@ public GalaticGui(){
 
                 // Display the results
                 JList<String> list = new JList<>(model);
+
+                list.addListSelectionListener(new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+                        if (!e.getValueIsAdjusting()) {
+                            String selectedName = list.getSelectedValue();
+
+                            try {
+                                Connection conn = ConnectSQL();
+
+                                // Execute the SQL query to retrieve data of the selected Moff
+                                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM moff WHERE fname=? AND lname=?");
+                                String[] names = selectedName.split(" ");
+                                stmt.setString(1, names[0]);
+                                stmt.setString(2, names[1]);
+                                ResultSet rs = stmt.executeQuery();
+
+                                // Retrieve all info and display it in the info pane
+                                if (rs.next()) {
+                                    String fname = rs.getString("fname");
+                                    String lname = rs.getString("lname");
+                                    Date seniority = rs.getDate("seniority");
+                                    String title = rs.getString("title");
+                                    int moffnum = rs.getInt("moffnum");
+                                    String homesystem = rs.getString("homesystem");
+                                    moffFrame.getInfopane().setText("This Moff name is " + fname + " " + lname +
+                                            "\n Start Date: " + seniority.toString() +
+                                            "\n This Moff title is: " + title + " ID: " + moffnum +
+                                            "\n The home system for this moff is " + homesystem);
+
+                                }
+
+                                rs.close();
+                                stmt.close();
+                                conn.close();
+                            } catch (SQLException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
                 JScrollPane scrollPane = moffFrame.getNamelist();
                 scrollPane.setViewportView(list);
 
@@ -71,9 +113,19 @@ public GalaticGui(){
 
 
 
-    // Useful Function Will go here, so like 'add', 'modify', and stuff
+    // Useful Function Will go here, so like 'add', 'modify', and stuff maybe
 
     public void add(){
     //We will use this to add information
+    }
+
+    public Connection ConnectSQL() {
+        Connection conn;
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/galacticconquest", "Testuser", "Test123!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return conn;
     }
 }
