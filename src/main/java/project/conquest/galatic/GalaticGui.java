@@ -19,16 +19,17 @@ public class GalaticGui extends JFrame {
     private JButton baseButton;
     private JButton systemButton;
     private JPanel Main;
-    private JPanel MoffPanel;
+   // private JPanel MoffPanel;
 public GalaticGui(){
+    function function = new function();
     moff.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Connection conn = function.connectdb();
             Moff moffFrame = new Moff();
             moffFrame.setContentPane(moffFrame.moffPanel);
 
             try {
-                Connection conn = ConnectSQL();
                 // Execute the SQL query
                 PreparedStatement stmt = conn.prepareStatement("SELECT fname, lname FROM moff");
                 ResultSet rs = stmt.executeQuery();
@@ -47,12 +48,11 @@ public GalaticGui(){
                 list.addListSelectionListener(new ListSelectionListener() {
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
+                        Connection conn = function.connectdb();
                         if (!e.getValueIsAdjusting()) {
                             String selectedName = list.getSelectedValue();
 
                             try {
-                                Connection conn = ConnectSQL();
-
                                 // Execute the SQL query to retrieve data of the selected Moff
                                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM moff WHERE fname=? AND lname=?");
                                 String[] names = selectedName.split(" ");
@@ -72,9 +72,7 @@ public GalaticGui(){
                                             "\n Start Date: " + seniority.toString() +
                                             "\n This Moff title is: " + title + " ID: " + moffnum +
                                             "\n The home system for this moff is " + homesystem);
-
                                 }
-
                                 rs.close();
                                 stmt.close();
                                 conn.close();
@@ -84,24 +82,21 @@ public GalaticGui(){
                         }
                     }
                 });
-
                 JScrollPane scrollPane = moffFrame.getNamelist();
                 scrollPane.setViewportView(list);
-
                 rs.close();
                 stmt.close();
                 conn.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-
             moffFrame.setSize(700, 700);
             moffFrame.setVisible(true);
             moffFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
     });
 }
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) {
 
         GalaticGui gui = new GalaticGui();
         gui.setContentPane(gui.Main);
@@ -109,23 +104,5 @@ public GalaticGui(){
         gui.setSize(500, 700);
         gui.setVisible(true);
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-
-
-    // Useful Function Will go here, so like 'add', 'modify', and stuff maybe
-
-    public void add(){
-    //We will use this to add information
-    }
-
-    public Connection ConnectSQL() {
-        Connection conn;
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/galacticconquest", "Testuser", "Test123!");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return conn;
     }
 }
