@@ -22,8 +22,9 @@ public class Moff extends JFrame {
                 people.setContentPane(people.addgui);
 
                 //Set the Text for the Labels for Moffs
-                people.TopLeft.setText("Top"); people.TopRight.setText("Test");
-                people.MidLeft.setText("Maybe"); people.MidRight.setText("Work");
+                people.TitleText.setText("moffs");
+                people.TopLeft.setText("StartData"); people.TopRight.setText("Title");
+                people.MidLeft.setText("HomeSystem"); people.MidRight.setText("IdNumber");
                 people.BottomLeft.setVisible(false); people.BottomRight.setVisible(false);
                 people.BottomRightTxt.setVisible(false); people.BottomLeftTxt.setVisible(false);
 
@@ -35,6 +36,31 @@ public class Moff extends JFrame {
                 people.setVisible(true);
                 people.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+
+            }
+        });
+        modify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addPeopleGui people = new addPeopleGui();
+                people.setContentPane(people.addgui);
+
+
+
+
+
+
+
+
+                people.setSize(600, 200);
+                people.setVisible(true);
+                people.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            }
+        });
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
             }
         });

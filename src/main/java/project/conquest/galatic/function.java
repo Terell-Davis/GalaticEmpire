@@ -10,10 +10,10 @@ public class function {
 
     }
 
-    public Connection connectdb() {
+    public static Connection connectdb() {
         Connection conn;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/galacticconquest", "Testuser", "Test123!");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/galacticempire", "Testuser", "Test123!");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

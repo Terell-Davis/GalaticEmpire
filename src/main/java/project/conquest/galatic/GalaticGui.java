@@ -31,14 +31,14 @@ public GalaticGui(){
 
             try {
                 // Execute the SQL query
-                PreparedStatement stmt = conn.prepareStatement("SELECT fname, lname FROM moff");
+                PreparedStatement stmt = conn.prepareStatement("SELECT FirstName, LastName FROM moffs");
                 ResultSet rs = stmt.executeQuery();
 
                 // Retrieve the results
                 DefaultListModel<String> model = new DefaultListModel<>();
                 while (rs.next()) {
-                    String firstname = rs.getString("fname");
-                    String lastname = rs.getString("lname");
+                    String firstname = rs.getString("FirstName");
+                    String lastname = rs.getString("LastName");
                     model.addElement(firstname + " " + lastname);
                 }
 
@@ -54,7 +54,9 @@ public GalaticGui(){
 
                             try {
                                 // Execute the SQL query to retrieve data of the selected Moff
-                                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM moff WHERE fname=? AND lname=?");
+                                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM moffs WHERE " +
+                                        "FirstName=? AND LastName=?");
+
                                 String[] names = selectedName.split(" ");
                                 stmt.setString(1, names[0]);
                                 stmt.setString(2, names[1]);
@@ -62,12 +64,12 @@ public GalaticGui(){
 
                                 // Retrieve all info and display it in the info pane
                                 if (rs.next()) {
-                                    String fname = rs.getString("fname");
-                                    String lname = rs.getString("lname");
-                                    Date seniority = rs.getDate("seniority");
-                                    String title = rs.getString("title");
-                                    int moffnum = rs.getInt("moffnum");
-                                    String homesystem = rs.getString("homesystem");
+                                    String fname = rs.getString("FirstName");
+                                    String lname = rs.getString("LastName");
+                                    Date seniority = rs.getDate("StartDate");
+                                    String title = rs.getString("Title");
+                                    int moffnum = rs.getInt("IdNumber");
+                                    String homesystem = rs.getString("HomeSystem");
                                     moffFrame.getInfopane().setText("This Moff name is " + fname + " " + lname +
                                             "\n Start Date: " + seniority.toString() +
                                             "\n This Moff title is: " + title + " ID: " + moffnum +
