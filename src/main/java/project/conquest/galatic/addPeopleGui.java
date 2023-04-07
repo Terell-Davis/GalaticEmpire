@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
+import static project.conquest.galatic.function.info;
+
 public class addPeopleGui extends JFrame {
     public JPanel addgui;
     public JTextField fname;
@@ -40,10 +42,9 @@ public class addPeopleGui extends JFrame {
             String FName = fname.getText(), LName = lname.getText(),
             TopL = TopLeftTxt.getText(), TopR = TopRightTxt.getText(),
             MidL = MidLeftTxt.getText(), MidR = MidRightTxt.getText(),
-            BotL = BottomLeftTxt.getText(), BotR = BottomRightTxt.getText(),
+            BotL = BottomLeftTxt.getText(), BotR = BottomRightTxt.getText();
 
-            table = TitleText.getText();
-
+            String table = info.currentTable.toString();
             try {
                 String query = "";
                 if(table == "moffs"){
@@ -63,7 +64,6 @@ public class addPeopleGui extends JFrame {
                 conn.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                errorView.setText(String.valueOf(ex));
             }
         }
     });
