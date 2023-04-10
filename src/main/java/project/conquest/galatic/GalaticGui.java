@@ -11,7 +11,7 @@ public class GalaticGui extends JFrame {
     private JButton moff;
     private JButton campaign;
     private JButton pioltsButton;
-    private JButton stromtroopersButton;
+    private JButton stormtroopersButton;
     private JButton fleetButton;
     private JButton legionButton;
     private JButton admiralButton;
@@ -438,7 +438,7 @@ public GalaticGui(){
             info.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
     });
-    stromtroopersButton.addActionListener(new ActionListener() {
+    stormtroopersButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             {
