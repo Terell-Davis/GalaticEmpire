@@ -136,55 +136,41 @@ public class InfoGui extends JFrame {
                 JList<String> list = (JList<String>) namelist.getViewport().getView();
                 String selectedName = list.getSelectedValue();
 
+                modpeople.setContentPane(new JPanel());
                 modpeople.setContentPane(modpeople.modifyPanel);
-                people.setContentPane(people.addgui);
 
                 // Autofill name from the one currently selected - wip will do if time allows
                 String[] name = selectedName.split(" ");
-                people.fname.setText(name[0]); people.lname.setText(name[1]);
 
                 Connection conn = function.connectdb();
 
-                if(currentTable == "moffs"){
-                    query = "UPDATE " + currentTable + " SET "  ;
+                if (currentTable == "moffs") {
+                    query = "UPDATE " + currentTable + " SET ";
+
+                try {
+                    // Execute the SQL query to retrieve data of the selected Moff
+                    PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + currentTable + " WHERE " +
+                            "FirstName=? AND LastName=?");
+
+                    String[] names = selectedName.split(" ");
+                    stmt.setString(1, names[0]);
+                    stmt.setString(2, names[1]);
+                    ResultSet rs = stmt.executeQuery();
+
+                    // Retrieve all info and display it in the info pane
+                    if (rs.next()) {
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
                 }
 
-
-
-
-
-                    try {
-                        // Execute the SQL query to retrieve data of the selected Moff
-                        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + currentTable +" WHERE " +
-                                "FirstName=? AND LastName=?");
-
-                        String[] names = selectedName.split(" ");
-                        stmt.setString(1, names[0]);
-                        stmt.setString(2, names[1]);
-                        ResultSet rs = stmt.executeQuery();
-
-                        // Retrieve all info and display it in the info pane
-                        if (rs.next()) {
-                        }
-                        rs.close();
-                        stmt.close();
-                        conn.close();
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-
-
-
-
-
-
-
-
-
-
-                people.setSize(600, 200);
-                people.setVisible(true);
-                people.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+                modpeople.setSize(600, 200);
+                modpeople.setVisible(true);
+                modpeople.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
             }
         });
