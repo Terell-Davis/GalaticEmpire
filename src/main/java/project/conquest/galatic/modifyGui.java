@@ -14,6 +14,12 @@ public class modifyGui extends JFrame {
     public JTextField TopR;
     public JTextField TopL;
     public JTextField ModifyDisplay;
+    private JLabel LabelTopR;
+    private JLabel LabelTopL;
+    private JLabel LabelMidL;
+    private JLabel LabelMidR;
+    private JLabel LabelBotL;
+    private JLabel LabelBotR;
 
     public modifyGui() {
         Submit.addActionListener(new ActionListener() {

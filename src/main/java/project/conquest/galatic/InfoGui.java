@@ -144,7 +144,9 @@ public class InfoGui extends JFrame {
 
                 Connection conn = function.connectdb();
 
-                if (currentTable == "moffs") {
+                if (Objects.equals(currentTable, "moffs") || Objects.equals(currentTable, "generals") ||
+                        Objects.equals(currentTable, "admirals") || Objects.equals(currentTable, "stormtroppers") ||
+                        Objects.equals(currentTable, "pilots")) {
                     query = "UPDATE " + currentTable + " SET ";
 
                 try {
@@ -167,6 +169,7 @@ public class InfoGui extends JFrame {
                     ex.printStackTrace();
                 }
 
+
             }
                 modpeople.setSize(600, 200);
                 modpeople.setVisible(true);
@@ -184,7 +187,9 @@ public class InfoGui extends JFrame {
                 System.out.println(selectedName);
                 String[] Firstname = selectedName.split(" ");
 
-                if(Objects.equals(currentTable, "moffs")){
+                if(Objects.equals(currentTable, "moffs") || Objects.equals(currentTable, "generals") ||
+                        Objects.equals(currentTable, "admirals") || Objects.equals(currentTable, "stormtroppers") ||
+                        Objects.equals(currentTable, "pilots")){
                     String query = "DELETE FROM " + currentTable + " WHERE FirstName=?";
                     try {
                         PreparedStatement stmt = conn.prepareStatement(query);
@@ -196,11 +201,13 @@ public class InfoGui extends JFrame {
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
-                } else if (Objects.equals(currentTable, "campaigns")) {
+                } else if (Objects.equals(currentTable, "campaigns") || Objects.equals(currentTable, "legions") ||
+                        Objects.equals(currentTable, "fleets") || Objects.equals(currentTable, "base") ||
+                        Objects.equals(currentTable, "systems")) {
                     String query = "DELETE FROM " + currentTable + " WHERE Name=?";
                     try {
                         PreparedStatement stmt = conn.prepareStatement(query);
-                        stmt.setString(1, Firstname[0]);
+                        stmt.setString(1, selectedName);
                         int result = stmt.executeUpdate();
                         System.out.println(result + " rows deleted");
                         stmt.close();

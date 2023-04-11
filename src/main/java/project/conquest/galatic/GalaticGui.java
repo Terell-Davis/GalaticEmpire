@@ -718,8 +718,8 @@ public GalaticGui(){
         }
     });
 }
-    public static void main(String[] args) {
-
+    public static void main(String[] args)
+    {
         GalaticGui gui = new GalaticGui();
         gui.setContentPane(gui.Main);
         gui.setTitle("Galatic Conquest Database");
