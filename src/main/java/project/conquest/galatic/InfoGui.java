@@ -33,11 +33,11 @@ public class InfoGui extends JFrame {
 
                 people.TopLeftTxt.setText(""); people.TopRightTxt.setText("");
                 people.MidLeftTxt.setText(""); people.MidRightTxt.setText("");
-                people.BottomLeftTxt.setText(""); people.BottomRightTxt.setText("");
+                people.BottomLeftTxt.setText(""); modpeople.BotR.setText("");
 
                 people.TopLeftTxt.setVisible(true); people.TopRightTxt.setVisible(true);
                 people.MidLeftTxt.setVisible(true); people.MidRightTxt.setVisible(true);
-                people.BottomLeftTxt.setVisible(true); people.BottomRightTxt.setVisible(true);
+                people.BottomLeftTxt.setVisible(true); modpeople.BotR.setVisible(true);
 
                 if(Objects.equals(currentTable, "moffs")) {
                     people.TitleText.setText(currentTable);
@@ -45,7 +45,7 @@ public class InfoGui extends JFrame {
                     people.TopLeft.setText("Title"); people.TopRight.setText("Id Number");
                     people.MidLeft.setText("HomeSystem"); people.MidRight.setText("Start Date (yyyy-mm-dd)");
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false); people.BottomRightTxt.setVisible(false);
+                    people.BottomRight.setVisible(false); modpeople.BotR.setVisible(false);
                 } else if (Objects.equals(currentTable, "campaigns")) {
                     people.TitleText.setText(currentTable);
 
@@ -53,7 +53,7 @@ public class InfoGui extends JFrame {
                     people.TopLeft.setText("Casualties"); people.TopRight.setText("Moff #");
                     people.MidLeft.setText("Status"); people.MidRight.setText("StartDate (yyyy-mm-dd)");
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false); people.BottomRightTxt.setVisible(false);
+                    people.BottomRight.setVisible(false); modpeople.BotR.setVisible(false);
                 }else if (Objects.equals(currentTable, "generals")) {
                     people.TitleText.setText(currentTable);
 
@@ -77,7 +77,7 @@ public class InfoGui extends JFrame {
                     people.TopLeft.setText("General #"); people.TopRight.setText("Base #");
                     people.MidLeft.setText("Specialty"); people.MidRight.setText("Troop Count");
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false); people.BottomRightTxt.setVisible(false);
+                    people.BottomRight.setVisible(false); modpeople.BotR.setVisible(false);
                 }else if (Objects.equals(currentTable, "fleets")) {
                     people.TitleText.setText(currentTable);
 
@@ -86,7 +86,7 @@ public class InfoGui extends JFrame {
                     people.MidLeft.setText("Ship Count");
                     people.MidRight.setVisible(false); people.MidRightTxt.setVisible(false);
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false); people.BottomRightTxt.setVisible(false);
+                    people.BottomRight.setVisible(false); modpeople.BotR.setVisible(false);
                 }else if (Objects.equals(currentTable, "stormtroopers")) {
                     people.TitleText.setText(currentTable);
 
@@ -111,7 +111,7 @@ public class InfoGui extends JFrame {
                     people.MidLeft.setText("Status");
                     people.MidRight.setVisible(false); people.MidRightTxt.setVisible(false);
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false); people.BottomRightTxt.setVisible(false);
+                    people.BottomRight.setVisible(false); modpeople.BotR.setVisible(false);
                 }else if (Objects.equals(currentTable, "systems")) {
                     people.TitleText.setText(currentTable);
 
@@ -121,7 +121,7 @@ public class InfoGui extends JFrame {
                     people.MidLeft.setText("Status");
                     people.MidRight.setVisible(false); people.MidRightTxt.setVisible(false);
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false);people.BottomRightTxt.setVisible(false);
+                    people.BottomRight.setVisible(false);modpeople.BotR.setVisible(false);
                 }
 
                 people.setSize(600, 250);
@@ -134,43 +134,96 @@ public class InfoGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 people.TitleText.setText(currentTable);
                 JList<String> list = (JList<String>) namelist.getViewport().getView();
-                String selectedName = list.getSelectedValue();
+               modpeople.selectedName = list.getSelectedValue();
 
                 modpeople.setContentPane(new JPanel());
                 modpeople.setContentPane(modpeople.modifyPanel);
 
-                // Autofill name from the one currently selected - wip will do if time allows
-                String[] name = selectedName.split(" ");
+                if(Objects.equals(currentTable, "moffs")) {
+                    people.TitleText.setText(currentTable);
+                    //function.set2Moff();
+                    modpeople.LabelTopL.setText("Title"); modpeople.LabelTopR.setText("Id Number");
+                    modpeople.LabelMidL.setText("HomeSystem"); modpeople.LabelMidR.setText("Start Date (yyyy-mm-dd)");
+                    modpeople.LabelBotL.setVisible(false); modpeople.BotL.setVisible(false);
+                    modpeople.LabelBotR.setVisible(false); modpeople.BotR.setVisible(false);
+                } else if (Objects.equals(currentTable, "campaigns")) {
+                    people.TitleText.setText(currentTable);
 
-                Connection conn = function.connectdb();
+                    modpeople.fname.setText("Campaign Name"); modpeople.lname.setText("Campaign #");
+                    modpeople.LabelTopL.setText("Casualties"); modpeople.LabelTopR.setText("Moff #");
+                    modpeople.LabelMidL.setText("Status"); modpeople.LabelMidR.setText("StartDate (yyyy-mm-dd)");
+                    modpeople.LabelBotL.setVisible(false); modpeople.BotL.setVisible(false);
+                    modpeople.LabelBotR.setVisible(false); modpeople.BotR.setVisible(false);
+                }else if (Objects.equals(currentTable, "generals")) {
+                    people.TitleText.setText(currentTable);
 
-                if (Objects.equals(currentTable, "moffs") || Objects.equals(currentTable, "generals") ||
-                        Objects.equals(currentTable, "admirals") || Objects.equals(currentTable, "stormtroppers") ||
-                        Objects.equals(currentTable, "pilots")) {
-                    query = "UPDATE " + currentTable + " SET ";
+                    modpeople.fname.setText("First Name"); modpeople.lname.setText("Last Name");
+                    modpeople.LabelTopL.setText("Campaign #"); modpeople.LabelTopR.setText("Id Number");
+                    modpeople.LabelMidL.setText("Stars"); modpeople.LabelMidR.setText("Start Date (yyyy-mm-dd)");
+                    modpeople.LabelBotR.setText("Birthday (yyyy-mm-dd)");
+                    modpeople.LabelBotL.setVisible(false); modpeople.BotL.setVisible(false);
+                }else if (Objects.equals(currentTable, "admirals")) {
+                    people.TitleText.setText(currentTable);
 
-                try {
-                    // Execute the SQL query to retrieve data of the selected Moff
-                    PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + currentTable + " WHERE " +
-                            "FirstName=? AND LastName=?");
+                    modpeople.fname.setText("First Name"); modpeople.lname.setText("Last Name");
+                    modpeople.LabelTopL.setText("Campaign #"); modpeople.LabelTopR.setText("Id Number");
+                    modpeople.LabelMidL.setText("Stars"); modpeople.LabelMidR.setText("Start Date (yyyy-mm-dd)");
+                    modpeople.LabelBotR.setText("Birthday (yyyy-mm-dd)");
+                    modpeople.LabelBotL.setVisible(false); modpeople.BotL.setVisible(false);
+                }else if (Objects.equals(currentTable, "legions")) {
+                    people.TitleText.setText(currentTable);
 
-                    String[] names = selectedName.split(" ");
-                    stmt.setString(1, names[0]);
-                    stmt.setString(2, names[1]);
-                    ResultSet rs = stmt.executeQuery();
+                    modpeople.fname.setText("Legion Name"); modpeople.lname.setText("Legion #");
+                    modpeople.LabelTopL.setText("General #"); modpeople.LabelTopR.setText("Base #");
+                    modpeople.LabelMidL.setText("Specialty"); modpeople.LabelMidR.setText("Troop Count");
+                    modpeople.LabelBotL.setVisible(false); modpeople.BotL.setVisible(false);
+                    modpeople.LabelBotR.setVisible(false); modpeople.BotR.setVisible(false);
+                }else if (Objects.equals(currentTable, "fleets")) {
+                    people.TitleText.setText(currentTable);
 
-                    // Retrieve all info and display it in the info pane
-                    if (rs.next()) {
-                    }
-                    rs.close();
-                    stmt.close();
-                    conn.close();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    modpeople.fname.setText("Fleet Name"); modpeople.lname.setText("Fleet #");
+                    modpeople.LabelTopL.setText("Admiral #"); modpeople.LabelTopR.setText("System");
+                    modpeople.LabelMidL.setText("Ship Count");
+                    modpeople.MidR.setVisible(false); modpeople.LabelMidR.setVisible(false);
+                    modpeople.LabelBotL.setVisible(false); modpeople.BotL.setVisible(false);
+                    modpeople.LabelBotR.setVisible(false); modpeople.BotR.setVisible(false);
+                }else if (Objects.equals(currentTable, "stormtroopers")) {
+                    people.TitleText.setText(currentTable);
+
+                    modpeople.fname.setText("First Name"); modpeople.lname.setText("Last Name");
+                    modpeople.LabelTopL.setText("Rank"); modpeople.LabelTopR.setText("Id Number");
+                    modpeople.LabelMidL.setText("Home System"); modpeople.LabelMidR.setText("Birthday (yyyy-mm-dd)");
+                    modpeople.LabelBotR.setText("Legion #");
+                    modpeople.LabelBotL.setVisible(false); modpeople.BotL.setVisible(false);
+                }else if (Objects.equals(currentTable, "pilots")) {
+                    people.TitleText.setText(currentTable);
+
+                    modpeople.fname.setText("First Name"); modpeople.lname.setText("Last Name");
+                    modpeople.LabelTopL.setText("Rank"); modpeople.LabelTopR.setText("Id Number");
+                    modpeople.LabelMidL.setText("Home System"); modpeople.LabelMidR.setText("Birthday (yyyy-mm-dd)");
+                    modpeople.LabelBotR.setText("Fleet #");
+                    modpeople.LabelBotL.setVisible(false); modpeople.BotL.setVisible(false);
+                }else if (Objects.equals(currentTable, "base")) {
+                    people.TitleText.setText(currentTable);
+
+                    modpeople.fname.setText("Name"); modpeople.lname.setText("Base #");
+                    modpeople.LabelTopL.setText("System");modpeople.LabelTopR.setText("coordinates");
+                    modpeople.LabelMidL.setText("Status");
+                    modpeople.MidR.setVisible(false); modpeople.LabelMidR.setVisible(false);
+                    modpeople.LabelBotL.setVisible(false); modpeople.BotL.setVisible(false);
+                    modpeople.LabelBotR.setVisible(false); modpeople.BotR.setVisible(false);
+                }else if (Objects.equals(currentTable, "systems")) {
+                    people.TitleText.setText(currentTable);
+
+                    modpeople.fname.setText("Name");
+                    modpeople.lname.setVisible(false); people.lname.setVisible(false);
+                    modpeople.LabelTopL.setText("Moon");modpeople.LabelTopR.setText("coordinates");
+                    modpeople.LabelMidL.setText("Status");
+                    modpeople.MidR.setVisible(false); modpeople.LabelMidR.setVisible(false);
+                    modpeople.LabelBotL.setVisible(false); modpeople.BotL.setVisible(false);
+                    modpeople.LabelBotR.setVisible(false);modpeople.BotR.setVisible(false);
                 }
 
-
-            }
                 modpeople.setSize(600, 200);
                 modpeople.setVisible(true);
                 modpeople.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
