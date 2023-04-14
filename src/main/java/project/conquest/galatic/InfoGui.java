@@ -135,6 +135,7 @@ public class InfoGui extends JFrame {
                 people.TitleText.setText(currentTable);
                 JList<String> list = (JList<String>) namelist.getViewport().getView();
                modpeople.selectedName = list.getSelectedValue();
+               modpeople.currentTable = currentTable;
 
                 modpeople.setContentPane(new JPanel());
                 modpeople.setContentPane(modpeople.modifyPanel);

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class modifyGui extends JFrame {
     public JPanel modifyPanel;
@@ -31,7 +32,10 @@ public class modifyGui extends JFrame {
     private JButton pullbutton;
     public String selectedName;
 
+    public String currentTable;
+
     public modifyGui() {
+        Connection conn = function.connectdb();
         Submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,6 +46,67 @@ public class modifyGui extends JFrame {
         pullbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println(selectedName);
+                if(Objects.equals(currentTable, "moffs") || Objects.equals(currentTable, "generals") ||
+                        Objects.equals(currentTable, "admirals") || Objects.equals(currentTable, "stormtroppers") ||
+                        Objects.equals(currentTable, "pilots")){
+                    String query = "SELECT * FROM " + currentTable + " WHERE FirstName=? AND LastName=?";
+                    try {
+                        String[] Firstname = selectedName.split(" ");
+                        PreparedStatement stmt = conn.prepareStatement(query);
+                        stmt.setString(1, Firstname[0]);
+                        stmt.setString(2, Firstname[1]);
+
+                        ResultSet rs = stmt.executeQuery();
+
+                        if (rs.next()) {
+                            if(Objects.equals(currentTable, "moffs")){
+                                fnameTxt.setText(rs.getString("FirstName"));
+                                lnameTxt.setText(rs.getString("LastName"));
+                                TopL.setText(rs.getString("Title"));
+                                TopR.setText(rs.getString("Idnumber"));
+                                MidL.setText(rs.getString("Homesystem"));
+                                MidR.setText(rs.getString("StartDate"));
+                            } else if (Objects.equals(currentTable, "generals") ||
+                                    Objects.equals(currentTable, "admirals")) {
+                                fnameTxt.setText(rs.getString("FirstName"));
+                                lnameTxt.setText(rs.getString("LastName"));
+                                TopL.setText(rs.getString("CampaignNumber"));
+                                TopR.setText(rs.getString("Idnumber"));
+                                MidL.setText(rs.getString("Stars"));
+                                MidR.setText(rs.getString("StartDate"));
+                                BotR.setText(rs.getString("BirthDate"));
+                            } else if (Objects.equals(currentTable, "stormtroppers") ||
+                                    Objects.equals(currentTable, "pilots")) {
+                                fnameTxt.setText(rs.getString("FirstName"));
+                                lnameTxt.setText(rs.getString("LastName"));
+                                TopL.setText(rs.getString("Rank"));
+                                TopR.setText(rs.getString("Idnumber"));
+                                MidL.setText(rs.getString("Homesystem"));
+                                MidR.setText(rs.getString("BirthDate"));
+                                BotR.setText(rs.getString(6));
+                            }
+                        }
+                        stmt.close();
+                        conn.close();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                } else if (Objects.equals(currentTable, "campaigns") || Objects.equals(currentTable, "legions") ||
+                        Objects.equals(currentTable, "fleets") || Objects.equals(currentTable, "base") ||
+                        Objects.equals(currentTable, "systems")) {
+                    String query = "SELECT FROM " + currentTable + " WHERE Name=?";
+                    try {
+                        PreparedStatement stmt = conn.prepareStatement(query);
+                        stmt.setString(1, selectedName);
+
+
+                        stmt.close();
+                        conn.close();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
             }
         });
     }
