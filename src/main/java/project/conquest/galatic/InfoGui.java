@@ -27,25 +27,28 @@ public class InfoGui extends JFrame {
                 people.setContentPane(people.addgui);
                 TableTxtField.setText(currentTable);
 
+                people.firstname.setVisible(true); people.lastname.setVisible(true);
                 people.TopLeft.setVisible(true); people.TopRight.setVisible(true);
                 people.MidLeft.setVisible(true); people.MidRight.setVisible(true);
-                people.BottomLeft.setVisible(true); people.BottomRight.setVisible(true);
+                people.BottomLeft.setVisible(true); people.BottomRightTxt.setVisible(true);
 
+                people.fname.setText(""); people.lname.setText("");
                 people.TopLeftTxt.setText(""); people.TopRightTxt.setText("");
                 people.MidLeftTxt.setText(""); people.MidRightTxt.setText("");
-                people.BottomLeftTxt.setText(""); modpeople.BotR.setText("");
+                people.BottomLeftTxt.setText(""); people.BottomRightTxt.setText("");
 
+                people.fname.setVisible(true); people.lname.setVisible(true);
                 people.TopLeftTxt.setVisible(true); people.TopRightTxt.setVisible(true);
                 people.MidLeftTxt.setVisible(true); people.MidRightTxt.setVisible(true);
-                people.BottomLeftTxt.setVisible(true); modpeople.BotR.setVisible(true);
+                people.BottomLeftTxt.setVisible(true); people.BottomRightTxt.setVisible(true);
 
                 if(Objects.equals(currentTable, "moffs")) {
                     people.TitleText.setText(currentTable);
-                    //function.set2Moff();
+
                     people.TopLeft.setText("Title"); people.TopRight.setText("Id Number");
                     people.MidLeft.setText("HomeSystem"); people.MidRight.setText("Start Date (yyyy-mm-dd)");
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false); modpeople.BotR.setVisible(false);
+                    people.BottomRight.setVisible(false); people.BottomRightTxt.setVisible(false);
                 } else if (Objects.equals(currentTable, "campaigns")) {
                     people.TitleText.setText(currentTable);
 
@@ -53,7 +56,7 @@ public class InfoGui extends JFrame {
                     people.TopLeft.setText("Casualties"); people.TopRight.setText("Moff #");
                     people.MidLeft.setText("Status"); people.MidRight.setText("StartDate (yyyy-mm-dd)");
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false); modpeople.BotR.setVisible(false);
+                    people.BottomRight.setVisible(false); people.BottomRightTxt.setVisible(false);
                 }else if (Objects.equals(currentTable, "generals")) {
                     people.TitleText.setText(currentTable);
 
@@ -77,7 +80,7 @@ public class InfoGui extends JFrame {
                     people.TopLeft.setText("General #"); people.TopRight.setText("Base #");
                     people.MidLeft.setText("Specialty"); people.MidRight.setText("Troop Count");
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false); modpeople.BotR.setVisible(false);
+                    people.BottomRight.setVisible(false); people.BottomRightTxt.setVisible(false);
                 }else if (Objects.equals(currentTable, "fleets")) {
                     people.TitleText.setText(currentTable);
 
@@ -86,7 +89,7 @@ public class InfoGui extends JFrame {
                     people.MidLeft.setText("Ship Count");
                     people.MidRight.setVisible(false); people.MidRightTxt.setVisible(false);
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false); modpeople.BotR.setVisible(false);
+                    people.BottomRight.setVisible(false); people.BottomRightTxt.setVisible(false);
                 }else if (Objects.equals(currentTable, "stormtroopers")) {
                     people.TitleText.setText(currentTable);
 
@@ -109,9 +112,10 @@ public class InfoGui extends JFrame {
                     people.firstname.setText("Name"); people.lastname.setText("Base #");
                     people.TopLeft.setText("System");people.TopRight.setText("coordinates");
                     people.MidLeft.setText("Status");
+                    people.lname.setVisible(true); people.lastname.setVisible(true);
                     people.MidRight.setVisible(false); people.MidRightTxt.setVisible(false);
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false); modpeople.BotR.setVisible(false);
+                    people.BottomRight.setVisible(false); people.BottomRightTxt.setVisible(false);
                 }else if (Objects.equals(currentTable, "systems")) {
                     people.TitleText.setText(currentTable);
 
@@ -121,7 +125,7 @@ public class InfoGui extends JFrame {
                     people.MidLeft.setText("Status");
                     people.MidRight.setVisible(false); people.MidRightTxt.setVisible(false);
                     people.BottomLeft.setVisible(false); people.BottomLeftTxt.setVisible(false);
-                    people.BottomRight.setVisible(false);modpeople.BotR.setVisible(false);
+                    people.BottomRight.setVisible(false);people.BottomRight.setVisible(false);
                 }
 
                 people.setSize(600, 250);
@@ -225,7 +229,7 @@ public class InfoGui extends JFrame {
                     modpeople.LabelBotR.setVisible(false);modpeople.BotR.setVisible(false);
                 }
 
-                modpeople.setSize(600, 200);
+                modpeople.setSize(600, 400);
                 modpeople.setVisible(true);
                 modpeople.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
