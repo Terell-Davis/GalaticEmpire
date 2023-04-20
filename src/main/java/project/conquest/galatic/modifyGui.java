@@ -41,6 +41,8 @@ public class modifyGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 System.out.println(selectedName);
 
+                String query = "UPDATE " + currentTable + " SET";
+
             }
         });
         pullbutton.addActionListener(new ActionListener() {
@@ -99,6 +101,21 @@ public class modifyGui extends JFrame {
                     try {
                         PreparedStatement stmt = conn.prepareStatement(query);
                         stmt.setString(1, selectedName);
+
+                        ResultSet rs = stmt.executeQuery();
+
+                        if (rs.next()) {
+                            if(Objects.equals(currentTable, "campaigns")){
+                                fnameTxt.setText(rs.getString("Name"));
+                                lnameTxt.setText(rs.getString("campaignnumber"));
+                                TopL.setText(rs.getString("Casualties"));
+                                TopR.setText(rs.getString("moffnumber"));
+                                MidL.setText(rs.getString("Status"));
+                                MidR.setText(rs.getString("StartDate"));
+                            } else if (Objects.equals(currentTable, "legions")) {
+                                
+                            }
+                        }
 
 
                         stmt.close();
